@@ -1,0 +1,54 @@
+CREATE TABLE "carts" (
+  "id" serial PRIMARY KEY,
+  "products_id" int NOT NULL,
+  "users_id" int NOT NULL
+);
+
+CREATE TABLE "categories" (
+  "id" serial PRIMARY KEY,
+  "color_id" int NOT NULL,
+  "texture_id" int NOT NULL
+);
+
+CREATE TABLE "colors" (
+  "id" serial PRIMARY KEY,
+  "name" varchar NOT NULL
+);
+
+CREATE TABLE "texture" (
+  "id" serial PRIMARY KEY,
+  "name" varchar NOT NULL
+);
+
+CREATE TABLE "catalogo" (
+  "id" serial PRIMARY KEY,
+  "sellers_id" int NOT NULL,
+  "products_id" int NOT NULL
+);
+
+CREATE TABLE "sellers" (
+  "id" serial PRIMARY KEY,
+  "name" varchar NOT NULL,
+  "country" varchar(20) NOT NULL,
+  "street" varchar NOT NULL,
+  "City" varchar NOT NULL,
+  "phone" varchar(13) NOT NULL,
+  "emeil" varchar UNIQUE NOT NULL,
+  "password" varchar NOT NULL,
+  "created_at" timestamp DEFAULT 'now()',
+  "updated_at" timestamp DEFAULT 'now()'
+);
+
+ALTER TABLE "carts" ADD FOREIGN KEY ("users_id") REFERENCES "users" ("id");
+
+ALTER TABLE "carts" ADD FOREIGN KEY ("products_id") REFERENCES "products" ("id");
+
+ALTER TABLE "products" ADD FOREIGN KEY ("categories_id") REFERENCES "categories" ("id");
+
+ALTER TABLE "catalogo" ADD FOREIGN KEY ("products_id") REFERENCES "products" ("id");
+
+ALTER TABLE "categories" ADD FOREIGN KEY ("color_id") REFERENCES "colors" ("id");
+
+ALTER TABLE "categories" ADD FOREIGN KEY ("texture_id") REFERENCES "texture" ("id");
+
+ALTER TABLE "catalogo" ADD FOREIGN KEY ("sellers_id") REFERENCES "sellers" ("id");

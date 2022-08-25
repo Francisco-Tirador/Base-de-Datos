@@ -1,0 +1,40 @@
+CREATE TABLE "users" (
+  "id" serial PRIMARY KEY,
+  "name" varchar NOT NULL,
+  "age" varchar NOT NULL,
+  "country" varchar(20) NOT NULL,
+  "IS_merrye" boolean DEFAULT false,
+  "emeil" varchar UNIQUE NOT NULL,
+  "password" varchar NOT NULL,
+  "created_at" timestamp DEFAULT (now()),
+  "update_at" timestamp DEFAULT 'now()'
+);
+
+CREATE TABLE "Poust" (
+  "id" serial PRIMARY KEY,
+  "title" varchar NOT NULL,
+  "conten" text NOT NULL,
+  "time_created" timestamp NOT NULL,
+  "created_at" timestamp DEFAULT 'now()',
+  "update_at" timestamp DEFAULT 'now ()',
+  "users_id" int NOT NULL,
+  "coments_id" int NOT NULL
+);
+
+CREATE TABLE "coments" (
+  "id" serial PRIMARY KEY,
+  "contenido" text NOT NULL,
+  "img_url" varchar,
+  "update_at" timestamp DEFAULT 'now()',
+  "created_at" timestamp DEFAULT 'now()',
+  "poust_id" int NOT NULL,
+  "users_id" int NOT NULL
+);
+
+ALTER TABLE "coments" ADD FOREIGN KEY ("users_id") REFERENCES "users" ("id");
+
+ALTER TABLE "Poust" ADD FOREIGN KEY ("users_id") REFERENCES "users" ("id");
+
+ALTER TABLE "coments" ADD FOREIGN KEY ("poust_id") REFERENCES "Poust" ("id");
+
+ALTER TABLE "Poust" ADD FOREIGN KEY ("coments_id") REFERENCES "coments" ("id");
